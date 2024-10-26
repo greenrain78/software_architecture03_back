@@ -1,2 +1,2 @@
 ./gradlew build
-java -jar build/libs/example-0.0.1-SNAPSHOT.jar
+java -jar build/libs/demo-0.0.1-SNAPSHOT.jar
