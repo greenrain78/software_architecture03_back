@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.domain.Recipe;
+import com.example.demo.dto.Ingredient;
 import com.example.demo.dto.RecipeCreateRequest;
 import com.example.demo.dto.RecipeResponse;
 import com.example.demo.repository.RecipeRepository;
@@ -8,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Slf4j
@@ -23,10 +25,12 @@ public class RecipeService {
                 .name(recipe.getName())
                 .description(recipe.getDescription())
                 .ingredients(recipe.getIngredients())
-                .build()).toList();
+                .build()
+        ).toList();
     }
 
     public RecipeResponse createRecipe(RecipeCreateRequest recipeCreateRequest) {
+        log.warn("레시피 생성 요청 : {}", recipeCreateRequest);
         Recipe recipe = Recipe.builder()
                 .name(recipeCreateRequest.getName())
                 .description(recipeCreateRequest.getDescription())
@@ -39,6 +43,7 @@ public class RecipeService {
                 .description(savedRecipe.getDescription())
                 .ingredients(savedRecipe.getIngredients())
                 .build();
+
     }
 
     public RecipeResponse updateRecipe(Long id, RecipeCreateRequest recipeCreateRequest) {
