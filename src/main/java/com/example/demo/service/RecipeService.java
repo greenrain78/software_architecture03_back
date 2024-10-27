@@ -58,4 +58,14 @@ public class RecipeService {
     public void deleteRecipe(Long id) {
         recipeRepository.deleteById(id);
     }
+
+    public List<RecipeResponse> searchRecipe(String keyword) {
+        List<Recipe> recipeList = recipeRepository.findByName(keyword);
+        return recipeList.stream().map(recipe -> RecipeResponse.builder()
+                .id(recipe.getId())
+                .name(recipe.getName())
+                .description(recipe.getDescription())
+                .ingredients(recipe.getIngredients())
+                .build()).toList();
+    }
 }
