@@ -1,10 +1,7 @@
 package com.example.demo.domain;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -23,5 +20,6 @@ public class Ingredient {
     private String name;
 
     @OneToMany(mappedBy = "ingredient")
+    @ToString.Exclude
     private Set<RecipeIngredient> recipeIngredients = new HashSet<>();
 }

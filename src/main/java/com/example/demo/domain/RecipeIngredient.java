@@ -1,6 +1,5 @@
 package com.example.demo.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,6 +20,7 @@ public class RecipeIngredient {
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "ingredient_id")
+    @EqualsAndHashCode.Include
     private Ingredient ingredient;
 
     // 레시피에서 필요한 식재료의 수량

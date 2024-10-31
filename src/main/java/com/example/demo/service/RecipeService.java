@@ -4,6 +4,7 @@ import com.example.demo.domain.Ingredient;
 import com.example.demo.domain.Recipe;
 import com.example.demo.domain.RecipeIngredient;
 import com.example.demo.dto.RecipeCreateRequest;
+import com.example.demo.dto.RecipeResponse;
 import com.example.demo.repository.IngredientRepository;
 import com.example.demo.repository.RecipeRepository;
 import jakarta.transaction.Transactional;
@@ -12,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Slf4j
@@ -22,16 +24,10 @@ public class RecipeService {
     private final IngredientRepository ingredientRepository;
     private final IngredientService ingredientService;
 
-//    public List<RecipeResponse> getRecipe() {
-//        List<Recipe> recipeList = recipeRepository.findAllByOrderByIdDesc();
-//        return recipeList.stream().map(recipe -> RecipeResponse.builder()
-//                .id(recipe.getId())
-//                .name(recipe.getName())
-//                .description(recipe.getDescription())
-//                .ingredients(recipe.getIngredients())
-//                .build()
-//        ).toList();
-//    }
+    public List<RecipeResponse> getRecipe() {
+        List<Recipe> recipeList = recipeRepository.findAllByOrderByIdDesc();
+        return recipeList.stream().map(RecipeResponse::from).toList();
+    }
 
     @Transactional
     public Recipe createRecipe(RecipeCreateRequest recipeCreateRequest) {
@@ -50,12 +46,14 @@ public class RecipeService {
                             .name(ingredientRequest.getName())
                             .build());
             log.warn("레시피 생성 요청 ingredientRequest : {}", ingredientRequest);
+            log.warn("레시피 생성 요청 ingredient : {}", ingredient);
             RecipeIngredient recipeIngredient = RecipeIngredient.builder()
                     .recipe(recipe)
                     .ingredient(ingredient)
                     .amount(ingredientRequest.getAmount())
                     .unit(ingredientRequest.getUnit())
                     .build();
+            log.warn("레시피 생성 요청 recipeIngredient : {}", recipeIngredient);
             recipeIngredients.add(recipeIngredient);
         });
         log.warn("레시피 생성 요청 recipeIngredients : {}", recipeIngredients);
