@@ -3,6 +3,8 @@ package com.example.demo.service;
 import com.example.demo.domain.Ingredient;
 import com.example.demo.domain.Recipe;
 import com.example.demo.domain.RecipeIngredient;
+import com.example.demo.dto.IngredientListRequest;
+import com.example.demo.dto.IngredientResponse;
 import com.example.demo.dto.RecipeCreateRequest;
 import com.example.demo.dto.RecipeResponse;
 import com.example.demo.repository.IngredientRepository;
@@ -59,24 +61,28 @@ public class RecipeService {
     public void deleteRecipe(Long id) {
         recipeRepository.deleteById(id);
     }
-//
-//    public List<RecipeResponse> searchRecipe(String keyword) {
-//        List<Recipe> recipeList = recipeRepository.findByName(keyword);
-//        return recipeList.stream().map(recipe -> RecipeResponse.builder()
-//                .id(recipe.getId())
-//                .name(recipe.getName())
-//                .description(recipe.getDescription())
-//                .ingredients(recipe.getIngredients())
-//                .build()).toList();
-//    }
+
+    public List<RecipeResponse> searchRecipe(String recipeName) {
+        List<Recipe> recipeList = recipeRepository.findByName(recipeName);
+        return recipeList.stream().map(RecipeResponse::from).toList();
+    }
 
 
-//    public RecipeResponse recommendRecipe(IngredientListRequest ingredientListRequest) {
-//        return RecipeResponse.builder()
-//                .id(1L)
-//                .name("김치찌개")
-//                .description("김치찌개는 한국의 전통 음식 중 하나로, 김치와 돼지고기를 주재료로 하는 찌개이다.")
-//                .ingredients(ingredientListRequest.getIngredients())
-//                .build();
-//    }
+    public RecipeResponse recommendRecipe(IngredientListRequest ingredientListRequest) {
+        return RecipeResponse.builder()
+                .id(1L)
+                .name("김치찌개")
+                .description("김치찌개는 한국의 전통 음식 중 하나로, 김치와 돼지고기를 주재료로 하는 찌개이다.")
+                .ingredients(List.of(
+                        IngredientResponse.builder()
+                                .name("김치")
+                                .value("200g")
+                                .build(),
+                        IngredientResponse.builder()
+                                .name("두부")
+                                .value("1모")
+                                .build()
+                ))
+                .build();
+    }
 }
