@@ -16,6 +16,7 @@ public class RecipeIngredient {
 
     @ManyToOne
     @JoinColumn(name = "recipe_id")
+    @ToString.Exclude
     private Recipe recipe;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
