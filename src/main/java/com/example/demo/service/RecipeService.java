@@ -3,10 +3,7 @@ package com.example.demo.service;
 import com.example.demo.domain.Ingredient;
 import com.example.demo.domain.Recipe;
 import com.example.demo.domain.RecipeIngredient;
-import com.example.demo.dto.IngredientListRequest;
-import com.example.demo.dto.IngredientResponse;
-import com.example.demo.dto.RecipeCreateRequest;
-import com.example.demo.dto.RecipeResponse;
+import com.example.demo.dto.*;
 import com.example.demo.repository.IngredientRepository;
 import com.example.demo.repository.RecipeRepository;
 import jakarta.transaction.Transactional;
@@ -16,7 +13,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -67,22 +66,26 @@ public class RecipeService {
         return recipeList.stream().map(RecipeResponse::from).toList();
     }
 
-
-    public RecipeResponse recommendRecipe(IngredientListRequest ingredientListRequest) {
-        return RecipeResponse.builder()
+    public List<RecipeResponse> recommendRecipe(IngredientListRequest ingredientListRequest) {
+//        List<Recipe> recipeList = recipeRepository.findRecipesByIngredients(ingredientListRequest.getIngredients().stream()
+//                .collect(Collectors.toMap(IngredientRequest::getName, IngredientRequest::getAmount)));
+//        return recipeList.stream().map(RecipeResponse::from).toList();
+        List<Recipe> recipeList = recipeRepository.findRecipesByIngredients(ingredientListRequest.getIngredients().stream()
+                .map(IngredientRequest::getName)
+                .toList(),
+                ingredientListRequest.getIngredients().stream()
+                        .collect(Collectors.toMap(IngredientRequest::getName, IngredientRequest::getAmount)),
+                ingredientListRequest.getIngredients().size());
+        log.info("recipeList: {}", recipeList);
+        RecipeResponse recipeResponse = RecipeResponse.builder()
                 .id(1L)
-                .name("김치찌개")
-                .description("김치찌개는 한국의 전통 음식 중 하나로, 김치와 돼지고기를 주재료로 하는 찌개이다.")
-                .ingredients(List.of(
-                        IngredientResponse.builder()
-                                .name("김치")
-                                .value("200g")
-                                .build(),
-                        IngredientResponse.builder()
-                                .name("두부")
-                                .value("1모")
-                                .build()
-                ))
+                .name("recipe")
+                .description("description")
+                .ingredients(List.of(IngredientResponse.builder()
+                        .name("ingredient")
+                        .value(100.0 + "g")
+                        .build()))
                 .build();
+        return List.of(recipeResponse);
     }
 }

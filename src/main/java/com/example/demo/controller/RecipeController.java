@@ -56,7 +56,7 @@ public class RecipeController {
     // 레시피 추천
     @PostMapping("/recommend")
     @Operation(summary = "레시피 추천", description = "레시피를 추천합니다.")
-    public ResponseEntity<RecipeResponse> recommendRecipe(@RequestBody IngredientListRequest ingredientListRequest) {
+    public ResponseEntity<List<RecipeResponse>> recommendRecipe(@RequestBody IngredientListRequest ingredientListRequest) {
         log.info("레시피 추천 요청");
         return ResponseEntity.ok(recipeService.recommendRecipe(ingredientListRequest));
     }
