@@ -6,7 +6,7 @@ spring:
     password: sa
   jpa:
     hibernate:
-      ddl-auto: update # UPDATE, CREATE, CREATE-DROP
+      ddl-auto: create-drop # update, create, create-drop
   h2:
     console:
       enabled: true

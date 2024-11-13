@@ -1,5 +1,6 @@
 package com.example.demo.dto;
 
+import com.example.demo.domain.Recipe;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -7,6 +8,7 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 public class RecipeCreateRequest {
@@ -21,10 +23,18 @@ public class RecipeCreateRequest {
     @ArraySchema(schema = @Schema(implementation = IngredientRequest.class))
     @NotEmpty(message = "레시피 재료는 필수 항목입니다.")
     private List<IngredientRequest> ingredients;
-    public String getIngredients() {
-        return ingredients.stream()
-                .map(ingredient -> ingredient.getName() + ":" + ingredient.getValue())
-                .reduce((a, b) -> a + ", " + b)
-                .orElse("");
+
+    @Schema(description = "작성자", example = "홍길동")
+    private String writer;
+
+    public Recipe toEntity() {
+        return Recipe.builder()
+                .name(name)
+                .description(description)
+                .ingredients(ingredients.stream()
+                    .map(ingredient -> ingredient.getName() + Recipe.AMOUNT_DELIMITER + ingredient.getValue())
+                    .collect(Collectors.joining(", ")))
+                .writer(writer)
+                .build();
     }
 }

@@ -1,8 +1,6 @@
 package com.example.demo.controller;
 
 import com.example.demo.domain.Recipe;
-import com.example.demo.dto.IngredientListRequest;
-import com.example.demo.dto.IngredientResponse;
 import com.example.demo.dto.RecipeCreateRequest;
 import com.example.demo.dto.RecipeResponse;
 import com.example.demo.service.RecipeService;
@@ -32,9 +30,10 @@ public class RecipeController {
     @Operation(summary = "레시피 생성", description = "레시피를 생성합니다.")
     public ResponseEntity<RecipeResponse> createRecipe(@RequestBody RecipeCreateRequest recipeCreateRequest) {
         log.info("레시피 생성 요청");
-        Recipe recipe = recipeService.createRecipe(recipeCreateRequest);
-        return ResponseEntity.ok(RecipeResponse.from(recipe));
+        RecipeResponse recipeResponse = recipeService.createRecipe(recipeCreateRequest);
+        return ResponseEntity.ok(recipeResponse);
     }
+
 //    @DeleteMapping("/{id}")
 //    @Operation(summary = "레시피 삭제", description = "레시피를 삭제합니다.")
 //    public ResponseEntity<Void> deleteRecipe(@PathVariable Long id) {

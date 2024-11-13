@@ -22,12 +22,9 @@ public class RecipeService {
     }
 
     @Transactional
-    public Recipe createRecipe(RecipeCreateRequest recipeCreateRequest) {
-        Recipe recipe = Recipe.builder()
-                .name(recipeCreateRequest.getName())
-                .description(recipeCreateRequest.getDescription())
-                .ingredients(recipeCreateRequest.getIngredients())
-                .build();
-        return recipeRepository.save(recipe);
+    public RecipeResponse createRecipe(RecipeCreateRequest recipeCreateRequest) {
+        Recipe recipe = recipeCreateRequest.toEntity();
+        Recipe savedRecipe = recipeRepository.save(recipe);
+        return RecipeResponse.from(savedRecipe);
     }
 }
