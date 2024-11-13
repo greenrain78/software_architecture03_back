@@ -1,14 +1,10 @@
 package com.example.demo.domain;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @Data
 @Entity
@@ -26,6 +22,6 @@ public class Recipe {
     @Column(nullable=false)
     private String description;
 
-    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
-    private Set<RecipeIngredient> recipeIngredients = new HashSet<>();
+    @Column(nullable=false)
+    private String ingredients;
 }

@@ -4,8 +4,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 
-import java.util.List;
-
 @Data
 public class RecipeCreateRequest {
     @Schema(description = "레시피 이름", example = "김치찌개")
@@ -18,5 +16,5 @@ public class RecipeCreateRequest {
 
     @Schema(description = "레시피 재료", example = "[{\"name\":\"김치\",\"value\":\"200g\"},{\"name\":\"두부\",\"value\":\"100g\"}]")
     @NotEmpty(message = "레시피 재료는 필수 항목입니다.")
-    private List<IngredientRequest> ingredients;
+    private String ingredients;
 }

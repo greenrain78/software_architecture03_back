@@ -33,38 +33,27 @@ public class RecipeController {
     public ResponseEntity<RecipeResponse> createRecipe(@RequestBody RecipeCreateRequest recipeCreateRequest) {
         log.info("레시피 생성 요청");
         Recipe recipe = recipeService.createRecipe(recipeCreateRequest);
-        List<IngredientResponse> ingredients = recipe.getRecipeIngredients().stream()
-                .map(recipeIngredient -> IngredientResponse.builder()
-                        .name(recipeIngredient.getIngredient().getName())
-                        .value(recipeIngredient.getValue())
-                        .build())
-                .toList();
-        return ResponseEntity.ok(RecipeResponse.builder()
-                .id(recipe.getId())
-                .name(recipe.getName())
-                .description(recipe.getDescription())
-                .ingredients(ingredients)
-                .build());
+        return ResponseEntity.ok(RecipeResponse.from(recipe));
     }
-    @DeleteMapping("/{id}")
-    @Operation(summary = "레시피 삭제", description = "레시피를 삭제합니다.")
-    public ResponseEntity<Void> deleteRecipe(@PathVariable Long id) {
-        log.info("레시피 삭제 요청");
-        recipeService.deleteRecipe(id);
-        return ResponseEntity.ok().build();
-    }
-    // 레시피 추천
-    @PostMapping("/recommend")
-    @Operation(summary = "레시피 추천", description = "레시피를 추천합니다.")
-    public ResponseEntity<List<RecipeResponse>> recommendRecipe(@RequestBody IngredientListRequest ingredientListRequest) {
-        log.info("레시피 추천 요청");
-        return ResponseEntity.ok(recipeService.recommendRecipe(ingredientListRequest));
-    }
-    // 레시피 검색
-    @GetMapping("/search")
-    @Operation(summary = "레시피 검색", description = "레시피를 검색합니다.")
-    public ResponseEntity<List<RecipeResponse>> searchRecipe(@RequestParam String recipeName) {
-        log.info("레시피 검색 요청");
-        return ResponseEntity.ok(recipeService.searchRecipe(recipeName));
-    }
+//    @DeleteMapping("/{id}")
+//    @Operation(summary = "레시피 삭제", description = "레시피를 삭제합니다.")
+//    public ResponseEntity<Void> deleteRecipe(@PathVariable Long id) {
+//        log.info("레시피 삭제 요청");
+//        recipeService.deleteRecipe(id);
+//        return ResponseEntity.ok().build();
+//    }
+//    // 레시피 추천
+//    @PostMapping("/recommend")
+//    @Operation(summary = "레시피 추천", description = "레시피를 추천합니다.")
+//    public ResponseEntity<List<RecipeResponse>> recommendRecipe(@RequestBody IngredientListRequest ingredientListRequest) {
+//        log.info("레시피 추천 요청");
+//        return ResponseEntity.ok(recipeService.recommendRecipe(ingredientListRequest));
+//    }
+//    // 레시피 검색
+//    @GetMapping("/search")
+//    @Operation(summary = "레시피 검색", description = "레시피를 검색합니다.")
+//    public ResponseEntity<List<RecipeResponse>> searchRecipe(@RequestParam String recipeName) {
+//        log.info("레시피 검색 요청");
+//        return ResponseEntity.ok(recipeService.searchRecipe(recipeName));
+//    }
 }
