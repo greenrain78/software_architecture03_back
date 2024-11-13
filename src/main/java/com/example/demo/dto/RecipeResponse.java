@@ -13,8 +13,10 @@ public class RecipeResponse {
     private Long id;
     private String name;
     private String description;
-        private List<IngredientResponse> ingredients;
+    private List<IngredientResponse> ingredients;
     private String writer;
+    private String createdAt;
+    private String updatedAt;
 
     public static RecipeResponse from(Recipe recipe) {
         return RecipeResponse.builder()
@@ -25,6 +27,8 @@ public class RecipeResponse {
                     .map(IngredientResponse::from)
                     .toList())
                 .writer(recipe.getWriter())
+                .createdAt(recipe.getCreatedAt().toString())
+                .updatedAt(recipe.getUpdatedAt().toString())
                 .build();
     }
 }

@@ -34,13 +34,13 @@ public class RecipeController {
         return ResponseEntity.ok(recipeResponse);
     }
 
-//    @DeleteMapping("/{id}")
-//    @Operation(summary = "레시피 삭제", description = "레시피를 삭제합니다.")
-//    public ResponseEntity<Void> deleteRecipe(@PathVariable Long id) {
-//        log.info("레시피 삭제 요청");
-//        recipeService.deleteRecipe(id);
-//        return ResponseEntity.ok().build();
-//    }
+    @DeleteMapping("/{id}")
+    @Operation(summary = "레시피 삭제", description = "레시피를 삭제합니다.")
+    public ResponseEntity<Void> deleteRecipe(@PathVariable Long id) {
+        log.info("레시피 삭제 요청");
+        recipeService.deleteRecipe(id);
+        return ResponseEntity.ok().build();
+    }
 //    // 레시피 추천
 //    @PostMapping("/recommend")
 //    @Operation(summary = "레시피 추천", description = "레시피를 추천합니다.")

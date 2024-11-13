@@ -27,4 +27,8 @@ public class RecipeService {
         Recipe savedRecipe = recipeRepository.save(recipe);
         return RecipeResponse.from(savedRecipe);
     }
+
+    public void deleteRecipe(Long id) {
+        recipeRepository.deleteById(id);
+    }
 }
