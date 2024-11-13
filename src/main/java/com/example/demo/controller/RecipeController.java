@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.domain.Recipe;
 import com.example.demo.dto.RecipeCreateRequest;
 import com.example.demo.dto.RecipeResponse;
+import com.example.demo.dto.RecipeUpdateRequest;
 import com.example.demo.service.RecipeService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -41,6 +42,15 @@ public class RecipeController {
         recipeService.deleteRecipe(id);
         return ResponseEntity.ok().build();
     }
+
+    @PutMapping("/{id}")
+    @Operation(summary = "레시피 수정", description = "레시피를 수정합니다.")
+    public ResponseEntity<RecipeResponse> updateRecipe(@PathVariable Long id, @RequestBody RecipeUpdateRequest recipeUpdateRequest) {
+        log.info("레시피 수정 요청");
+        RecipeResponse recipeResponse = recipeService.updateRecipe(id, recipeUpdateRequest);
+        return ResponseEntity.ok(recipeResponse);
+    }
+
 //    // 레시피 추천
 //    @PostMapping("/recommend")
 //    @Operation(summary = "레시피 추천", description = "레시피를 추천합니다.")
