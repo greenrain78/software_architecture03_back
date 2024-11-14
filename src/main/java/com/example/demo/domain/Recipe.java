@@ -9,6 +9,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Entity
@@ -40,4 +41,8 @@ public class Recipe {
     @UpdateTimestamp
     @Column(nullable=false)
     private LocalDateTime updatedAt;
+
+    public List<String> getIngredientsList() {
+        return List.of(ingredients.split(", "));
+    }
 }

@@ -26,4 +26,12 @@ public class IngredientResponse {
                 .value(ingredientInfo[1])
                 .build();
     }
+    @JsonIgnore // swagger 에 노출되지 않음
+    public String getUnit() {
+        return value.replaceAll("[0-9.]", "");
+    }
+    @JsonIgnore
+    public double getAmount() {
+        return Double.parseDouble(value.replaceAll("[a-zA-Z]", ""));
+    }
 }
