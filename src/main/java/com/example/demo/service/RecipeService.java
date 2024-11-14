@@ -43,4 +43,9 @@ public class RecipeService {
         recipeRepository.save(recipe);
         return RecipeResponse.from(recipe);
     }
+
+    public List<RecipeResponse> searchRecipe(String recipeName) {
+        List<Recipe> recipeList = recipeRepository.findByNameContaining(recipeName);
+        return recipeList.stream().map(RecipeResponse::from).toList();
+    }
 }
