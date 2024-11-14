@@ -32,6 +32,6 @@ public class IngredientResponse {
     }
     @JsonIgnore
     public double getAmount() {
-        return Double.parseDouble(value.replaceAll("[a-zA-Z]", ""));
+        return Double.parseDouble(value.replaceAll("[^0-9.]", ""));
     }
 }
