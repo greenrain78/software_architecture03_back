@@ -32,7 +32,7 @@ public class RecipeCreateRequest {
                 .name(name)
                 .description(description)
                 .ingredients(ingredients.stream()
-                    .map(ingredient -> ingredient.getName() + Recipe.AMOUNT_DELIMITER + ingredient.getValue())
+                    .map(ingredient -> ingredient.getName() + Recipe.AMOUNT_DELIMITER + ingredient.getAmount())
                     .collect(Collectors.joining(", ")))
                 .writer(writer)
                 .build();

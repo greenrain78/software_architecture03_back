@@ -22,7 +22,7 @@ public class RecipeUpdateRequest {
         Optional.ofNullable(description).ifPresent(recipe::setDescription);
         Optional.ofNullable(ingredients).ifPresent(ingredientRequests -> {
             String ingredientString = ingredientRequests.stream()
-                    .map(ingredient -> ingredient.getName() + Recipe.AMOUNT_DELIMITER + ingredient.getValue())
+                    .map(ingredient -> ingredient.getName() + Recipe.AMOUNT_DELIMITER + ingredient.getAmount())
                     .collect(Collectors.joining(", "));
             recipe.setIngredients(ingredientString);
         });
