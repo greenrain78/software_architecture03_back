@@ -6,7 +6,10 @@ spring:
     password: sa
   jpa:
     hibernate:
-      ddl-auto: update # UPDATE, CREATE, CREATE-DROP
+      ddl-auto: create-drop # update, create, create-drop
+  sql:
+    init:
+      encoding: UTF-8
   h2:
     console:
       enabled: true

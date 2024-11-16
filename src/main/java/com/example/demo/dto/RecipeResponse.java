@@ -4,6 +4,7 @@ import com.example.demo.domain.Recipe;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Data
@@ -13,15 +14,21 @@ public class RecipeResponse {
     private String name;
     private String description;
     private List<IngredientResponse> ingredients;
+    private String writer;
+    private String createdAt;
+    private String updatedAt;
 
     public static RecipeResponse from(Recipe recipe) {
         return RecipeResponse.builder()
                 .id(recipe.getId())
                 .name(recipe.getName())
                 .description(recipe.getDescription())
-                .ingredients(recipe.getRecipeIngredients().stream()
-                        .map(IngredientResponse::from)
-                        .toList())
+                .ingredients(Arrays.stream(recipe.getIngredients().split(", "))
+                    .map(IngredientResponse::from)
+                    .toList())
+                .writer(recipe.getWriter())
+                .createdAt(recipe.getCreatedAt().toString())
+                .updatedAt(recipe.getUpdatedAt().toString())
                 .build();
     }
 }
